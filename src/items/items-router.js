@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const ItemsService = require('./items-service');
+const { requireAuth } = require('../auth/jwt-auth');
 const itemsRouter = express.Router();
 const jsonParser = express.json();
 
@@ -14,7 +15,7 @@ itemsRouter
       })
       .catch(next);
   })
-  .post(jsonParser, (req, res, next) => {
+  .post(requireAuth, jsonParser, (req, res, next) => {
     const { item_name, max_quantity, quantity, unit_type, expiration_date } = req.body;
     const newItem = { item_name, max_quantity, quantity, unit_type, expiration_date };
 
@@ -38,6 +39,7 @@ itemsRouter
 
 itemsRouter
   .route('/:item_id')
+  .all(requireAuth)
   .all((req, res, next) => {
     ItemsService.getItem(req.app.get('db'), req.params.item_id)
       .then((item) => {

@@ -9,6 +9,7 @@ const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
 const errorHandler = require('./bin/errorHandler');
 const itemsRouter = require('./items/items-router');
+const authRouter = require('./auth/auth-router');
 
 /*******************************************************************
   INIT
@@ -30,6 +31,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/items', itemsRouter);
+app.use('/api/auth', authRouter);
 
 /*******************************************************************
   ERROR HANDLING

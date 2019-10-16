@@ -9,13 +9,13 @@ TRUNCATE
 INSERT INTO items 
   (item_name, max_quantity, quantity, unit_type, expiration_date, id)
 VALUES
-  ('Rotten Eggs', 12, 20, 'unit', '6/6/2000', 'ac565e23-273d-4d07-adc7-769863ec7344'),
+  ('Rotten Eggs', 20, 12, 'unit', '6/6/2000', 'ac565e23-273d-4d07-adc7-769863ec7344'),
   ('Salmon', 5, 5, 'lbs', '1/15/2019', '5c3973b9-f8f6-4002-8fd8-7f53ec56a8cb'),
   ('Tilapia', 16, 16, 'pieces', '3/7/2019', '05ce5573-38ae-45ac-ab00-72fa609c40ef'),
   ('Tuna', 1000, 1000, 'grams', '5/30/2019', '9ce05028-159c-4e08-9341-73291bf01e09'),
   ('Toilet Paper', 430, 430, 'rolls', '7/18/2019', '595a2822-b772-49d9-8a7d-6c81fe237500'),
   ('Ammunition', 24, 24, 'boxes', '9/24/2019', '90f47e2c-150e-46eb-b4da-a97219346de6'),
-  ('Salmon', 5, 5, 'lbs', '12/2/2019', '771527df-c44b-4a91-b2f7-7f361b42f7e6');
+  ('Cod', 1, 0, 'fish', '12/2/2019', '771527df-c44b-4a91-b2f7-7f361b42f7e6');
 
 INSERT INTO users
   (user_name, password, id)
