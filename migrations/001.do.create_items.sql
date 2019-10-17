@@ -6,6 +6,6 @@ CREATE TABLE items (
   max_quantity REAL NOT NULL,
   quantity REAL NOT NULL,
   unit_type VARCHAR(16) NOT NULL,
-  expiration_date DATE NOT NULL,
+  expiration_date DATE,
   is_deleted BOOLEAN NOT NULL DEFAULT FALSE
 );

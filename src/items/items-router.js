@@ -17,7 +17,7 @@ itemsRouter
   })
   .post(requireAuth, jsonParser, (req, res, next) => {
     const { item_name, max_quantity, quantity, unit_type, expiration_date } = req.body;
-    const newItem = { item_name, max_quantity, quantity, unit_type, expiration_date };
+    const newItem = { item_name, max_quantity, quantity, unit_type };
 
     for (const [key, value] of Object.entries(newItem)) {
       if (!value) {
@@ -25,6 +25,10 @@ itemsRouter
           error: { message: `Missing '${key}' in request body` },
         });
       }
+    }
+
+    if (expiration_date) {
+      newItem.expiration_date = expiration_date;
     }
 
     ItemsService.createItem(req.app.get('db'), newItem)
