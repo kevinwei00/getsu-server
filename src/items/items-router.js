@@ -7,15 +7,16 @@ const jsonParser = express.json();
 
 itemsRouter
   .route('/')
+  .all(requireAuth)
   .get((req, res, next) => {
-    ItemsService.getAllItems(req.app.get('db'))
+    ItemsService.getAllItems(req.app.get('db'), req.user.id)
       .then((items) => {
         items = items.filter((item) => !item.is_deleted);
         return res.json(items);
       })
       .catch(next);
   })
-  .post(requireAuth, jsonParser, (req, res, next) => {
+  .post(jsonParser, (req, res, next) => {
     const { item_name, max_quantity, quantity, unit_type, expiration_date } = req.body;
     const newItem = { item_name, max_quantity, quantity, unit_type };
 
@@ -30,8 +31,7 @@ itemsRouter
     if (expiration_date) {
       newItem.expiration_date = expiration_date;
     }
-
-    ItemsService.createItem(req.app.get('db'), newItem)
+    ItemsService.createItem(req.app.get('db'), newItem, req.user.id)
       .then((item) => {
         return res
           .status(201)
