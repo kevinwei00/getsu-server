@@ -1,7 +1,15 @@
 const ItemsService = {
   getAllItems(db, user_id) {
     return db
-      .select('item_id', 'item_name', 'max_quantity', 'quantity', 'unit_type', 'expiration_date', 'is_deleted')
+      .select(
+        'item_id',
+        'item_name',
+        'max_quantity',
+        'quantity',
+        'unit_type',
+        'expiration_date',
+        'is_deleted'
+      )
       .from('items')
       .join('users_items', 'users_items.item_id', 'items.id')
       .join('users', 'users.id', 'users_items.user_id')
@@ -10,7 +18,15 @@ const ItemsService = {
 
   getItem(db, item_id) {
     return db
-      .select('item_id', 'item_name', 'max_quantity', 'quantity', 'unit_type', 'expiration_date', 'is_deleted')
+      .select(
+        'item_id',
+        'item_name',
+        'max_quantity',
+        'quantity',
+        'unit_type',
+        'expiration_date',
+        'is_deleted'
+      )
       .from('items')
       .join('users_items', 'users_items.item_id', 'items.id')
       .join('users', 'users.id', 'users_items.user_id')
@@ -19,11 +35,13 @@ const ItemsService = {
   },
 
   createItem(db, item, user_id) {
+    let _item;
     return db
       .insert(item)
       .into('items')
       .returning('*')
       .then((rows) => {
+        _item = rows[0];
         // insert posting user into intermediate table (linking user and item)
         return db
           .insert({
@@ -31,10 +49,10 @@ const ItemsService = {
             item_id: rows[0].id,
           })
           .into('users_items');
+      })
+      .then(() => {
+        return _item;
       });
-    // .then((rows) => {
-    //   return rows[0];
-    // });
   },
 
   updateItem(db, id, updateFields) {
