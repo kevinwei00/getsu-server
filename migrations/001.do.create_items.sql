@@ -7,5 +7,6 @@ CREATE TABLE items (
   quantity REAL NOT NULL,
   unit_type VARCHAR(16) NOT NULL,
   expiration_date DATE,
+  time_created TIMESTAMP NOT NULL DEFAULT now(),
   is_deleted BOOLEAN NOT NULL DEFAULT FALSE
 );

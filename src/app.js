@@ -10,6 +10,7 @@ const { NODE_ENV } = require('./config');
 const errorHandler = require('./bin/errorHandler');
 const itemsRouter = require('./items/items-router');
 const authRouter = require('./auth/auth-router');
+const usersRouter = require('./users/users-router');
 
 /*******************************************************************
   INIT
@@ -32,6 +33,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/items', itemsRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/users', usersRouter);
 
 /*******************************************************************
   ERROR HANDLING
