@@ -4,10 +4,11 @@ const app = require('../src/app');
 const AuthService = require('../src/auth/auth-service');
 const TestHelpers = require('./test-helpers');
 
-describe('Auth Endpoints', function() {
+describe('Authentication Endpoints', function() {
   let db;
   const mockUsers = TestHelpers.mockUsers();
   const testUser = mockUsers[0];
+  const endpointPath = '/api/auth/login';
 
   /*****************************************************************
     SETUP
@@ -29,7 +30,7 @@ describe('Auth Endpoints', function() {
   /*****************************************************************
     POST /api/auth/login
   ******************************************************************/
-  describe('POST /api/auth/login', () => {
+  describe(`POST ${endpointPath}`, () => {
     beforeEach('insert users', () => TestHelpers.seedUsers(db, mockUsers));
 
     const requiredFields = ['user_name', 'password'];
@@ -44,7 +45,7 @@ describe('Auth Endpoints', function() {
         delete loginAttemptBody[field];
 
         return supertest(app)
-          .post('/api/auth/login')
+          .post(endpointPath)
           .send(loginAttemptBody)
           .expect(400, { error: expectedMsg1 });
       });
@@ -54,7 +55,7 @@ describe('Auth Endpoints', function() {
     it(`responds 400 "${expectedMsg2}" when bad user_name`, () => {
       const testLogin = { user_name: 'nonexistent-user', password: 'password' };
       return supertest(app)
-        .post('/api/auth/login')
+        .post(endpointPath)
         .send(testLogin)
         .expect(400, { error: expectedMsg2 });
     });
@@ -62,7 +63,7 @@ describe('Auth Endpoints', function() {
     it(`responds 400 "${expectedMsg2}" when bad password`, () => {
       const testLogin = { user_name: testUser.user_name, password: 'incorrect' };
       return supertest(app)
-        .post('/api/auth/login')
+        .post(endpointPath)
         .send(testLogin)
         .expect(400, { error: expectedMsg2 });
     });
@@ -72,7 +73,7 @@ describe('Auth Endpoints', function() {
       const subject = testUser.user_name;
       const payload = { user_id: testUser.id };
       return supertest(app)
-        .post('/api/auth/login')
+        .post(endpointPath)
         .send(testLogin)
         .expect(200, { authToken: AuthService.createJwt(subject, payload) });
     });

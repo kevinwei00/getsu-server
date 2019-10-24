@@ -74,10 +74,27 @@ function seedUsers(db, users) {
   return db.insert(usersWithEncryptedPasswords).into('users');
 }
 
+function seedItems(db, users, items) {
+  return db.transaction(async (trx) => {
+    await seedUsers(trx, users);
+    await trx.insert(items).into('items');
+  });
+}
+
+function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
+  const token = jwt.sign({ user_id: user.id }, secret, {
+    subject: user.user_name,
+    algorithm: 'HS256',
+  });
+  return `Bearer ${token}`;
+}
+
 module.exports = {
   mockUsers,
   mockItems,
   mockRelations,
   truncateAllTables,
   seedUsers,
+  seedItems,
+  makeAuthHeader,
 };
