@@ -6,6 +6,7 @@ describe('Authorization Endpoints', function() {
   let db;
   const mockUsers = TestHelpers.mockUsers();
   const mockItems = TestHelpers.mockItems();
+  const mockRelations = TestHelpers.mockRelations();
 
   /*****************************************************************
     SETUP
@@ -27,7 +28,8 @@ describe('Authorization Endpoints', function() {
   /*****************************************************************
     test all protected endpoints
   ******************************************************************/
-  beforeEach('insert items', () => TestHelpers.seedItems(db, mockUsers, mockItems));
+  beforeEach('insert users', () => TestHelpers.seedUsers(db, mockUsers));
+  beforeEach('insert items', () => TestHelpers.seedItems(db, mockItems, mockRelations));
 
   const authorizationEndpoints = [
     {

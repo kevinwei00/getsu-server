@@ -7,13 +7,13 @@ function mockUsers() {
       id: '53d25d5f-a033-40b3-a253-84172a514973',
       user_name: 'test-user-1',
       password: 'password',
-      time_created: new Date('2020-01-01T00:00:00.000Z'),
+      // time_created: new Date('2020-01-01T00:00:00.000Z'),
     },
     {
       id: 'cc5fe585-8682-4499-a04e-6255b42116c1',
       user_name: 'test-user-2',
       password: 'password',
-      time_created: new Date('2020-01-01T00:00:00.000Z'),
+      // time_created: new Date('2020-01-01T00:00:00.000Z'),
     },
   ];
 }
@@ -26,8 +26,8 @@ function mockItems() {
       max_quantity: 10,
       quantity: 10,
       unit_type: 'units',
-      expiration_date: new Date('1000-01-01T00:00:00.000Z'),
-      time_created: new Date('2020-01-01T00:00:00.000Z'),
+      expiration_date: '1000-01-01T04:56:02.000Z',
+      // time_created: new Date('2020-01-01T00:00:00.000Z'),
       is_deleted: false,
     },
     {
@@ -36,8 +36,8 @@ function mockItems() {
       max_quantity: 10,
       quantity: 10,
       unit_type: 'units',
-      expiration_date: new Date('3000-01-01T00:00:00.000Z'),
-      time_created: new Date('2020-01-01T00:00:00.000Z'),
+      expiration_date: '3000-01-01T04:56:02.000Z',
+      // time_created: new Date('2020-01-01T00:00:00.000Z'),
       is_deleted: false,
     },
   ];
@@ -74,10 +74,10 @@ function seedUsers(db, users) {
   return db.insert(usersWithEncryptedPasswords).into('users');
 }
 
-function seedItems(db, users, items) {
+function seedItems(db, items, relations) {
   return db.transaction(async (trx) => {
-    await seedUsers(trx, users);
     await trx.insert(items).into('items');
+    await trx.insert(relations).into('users_items');
   });
 }
 
