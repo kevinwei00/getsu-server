@@ -70,14 +70,14 @@ itemsRouter
       .catch(next);
   })
   .patch(jsonParser, (req, res, next) => {
-    const { quantity, max_quantity } = req.body;
-    const itemToUpdate = { quantity, max_quantity };
+    const { item_name, quantity, max_quantity, expiration_date } = req.body;
+    const itemToUpdate = { item_name, quantity, max_quantity, expiration_date };
 
     const numberOfValues = Object.values(itemToUpdate).filter((val) => !!val).length;
     if (numberOfValues === 0) {
       return res.status(400).json({
         error: {
-          message: 'Request body must contain quantity and max_quantity',
+          message: 'Request body must contain all update fields',
         },
       });
     }
